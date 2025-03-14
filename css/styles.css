@@ -1,0 +1,507 @@
+/* 基本スタイル */
+:root {
+    /* 集中力を高める青系のカラースキーム */
+    --primary-color: #2c3e50;
+    --primary-light: #34495e;
+    --primary-dark: #1a2530;
+    --accent-color: #3498db;
+    --secondary-color: #27ae60;
+    --text-color: #333;
+    --text-light: #666;
+    --bg-color: #ecf0f1;
+    --glass-bg: rgba(255, 255, 255, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    --border-radius: 12px;
+    --task-text-width: 300px; /* タスクテキストの固定幅 */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    background-image: 
+        radial-gradient(at 80% 20%, rgba(44, 62, 80, 0.3) 0px, transparent 50%),
+        radial-gradient(at 20% 80%, rgba(52, 152, 219, 0.3) 0px, transparent 50%);
+    background-attachment: fixed;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Noto Serif JP', serif;
+    color: var(--primary-dark);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* グラスモーフィズム効果 */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    padding: 25px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
+}
+
+/* ヘッダー */
+.header {
+    text-align: center;
+    padding: 20px 0;
+    margin-bottom: 30px;
+}
+
+.logo {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    letter-spacing: 1px;
+}
+
+/* メインコンテンツ */
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+}
+
+/* 入力フォーム */
+.input-section {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.input-section h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+/* 優先度グループのスタイル */
+.priority-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.priority-group label {
+    font-weight: 500;
+    color: var(--primary-color);
+    min-width: 60px;
+}
+
+.priority-group select {
+    flex: 1;
+    max-width: 150px;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.5);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+/* テキスト入力のスタイル調整 */
+input[type="text"] {
+    font-size: 1.1rem;
+    padding: 15px 20px;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--accent-color);
+}
+
+.btn-add {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-add:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+/* タブ */
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: var(--text-light);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.tab-btn:after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.tab-btn.active {
+    color: var(--primary-color);
+    font-weight: 500;
+}
+
+.tab-btn.active:after,
+.tab-btn:hover:after {
+    width: 100%;
+}
+
+/* タスクリスト */
+.tasks-container {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden; /* 横スクロールを防止 */
+    padding-right: 5px;
+    width: 100%;
+    position: relative;
+}
+
+.tasks-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tasks-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.tasks-container::-webkit-scrollbar-thumb {
+    background: var(--accent-color);
+    border-radius: 10px;
+}
+
+#tasks-list {
+    list-style: none;
+    width: 100%;
+}
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: var(--border-radius);
+    border-left: 4px solid var(--accent-color);
+    transition: all 0.3s ease;
+    width: 100%;
+    position: relative;
+}
+
+.task-item[data-priority="high"] {
+    border-left-color: #e74c3c;
+}
+
+.task-item[data-priority="medium"] {
+    border-left-color: #f39c12;
+}
+
+.task-item[data-priority="low"] {
+    border-left-color: var(--secondary-color);
+}
+
+.task-item.completed {
+    opacity: 0.7;
+}
+
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    color: var(--text-light);
+}
+
+.task-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0; /* flexboxでテキストを省略するために必要 */
+    width: 100%;
+    position: relative;
+}
+
+.task-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+    flex-shrink: 0; /* チェックボックスのサイズを固定 */
+}
+
+/* タスクテキストのスタイル */
+.task-text {
+    font-size: 1rem;
+    width: var(--task-text-width);
+    max-width: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    flex: 1;
+    cursor: pointer;
+    padding: 5px 0;
+}
+
+/* 省略表示状態のタスクテキスト */
+.task-text.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 展開表示状態のタスクテキスト */
+.task-text.expanded {
+    white-space: normal;
+    word-wrap: break-word;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 5px 0;
+}
+
+/* 省略されているテキストを示す視覚的なインジケーター */
+.task-text.ellipsis[data-is-ellipsis="true"]::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7));
+    pointer-events: none;
+}
+
+/* 展開/折りたたみアイコン */
+.task-text[data-is-ellipsis="true"]::before {
+    content: '⋯';
+    position: absolute;
+    right: -20px;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.task-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0; /* アクションボタンのサイズを固定 */
+    margin-left: 10px;
+}
+
+.btn-delete {
+    background: transparent;
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+/* ページネーション */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+.pagination-btn {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--primary-color);
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination-btn:hover,
+.pagination-btn.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* フッター */
+.footer {
+    text-align: center;
+    padding: 20px 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: auto;
+    width: 100%;
+}
+
+/* アニメーション */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.task-item {
+    animation: fadeIn 0.5s ease forwards;
+}
+
+.task-checkbox:checked {
+    animation: checkmark 0.3s ease forwards;
+}
+
+/* レスポンシブデザイン */
+@media (min-width: 768px) {
+    .main {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    
+    .input-section {
+        flex: 1.5; /* 入力フォームの横幅を1.5倍に拡大 */
+        margin-right: 20px;
+        margin-bottom: 0;
+    }
+    
+    .tasks-section {
+        flex: 2;
+    }
+    
+    /* タスクテキストの幅を調整 */
+    :root {
+        --task-text-width: 400px;
+    }
+}
+
+@media (max-width: 767px) {
+    .container {
+        padding: 15px;
+    }
+    
+    .glass-panel {
+        padding: 20px;
+    }
+    
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .btn-add {
+        width: 100%;
+    }
+    
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .task-actions {
+        margin-top: 10px;
+        align-self: flex-end;
+    }
+    
+    /* モバイル向け優先度グループのスタイル */
+    .priority-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .priority-group select {
+        max-width: 100%;
+    }
+    
+    /* モバイル向けタスクテキストの幅を調整 */
+    :root {
+        --task-text-width: 100%;
+    }
+    
+    .task-text {
+        width: 100%;
+    }
+} 
