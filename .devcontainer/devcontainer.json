@@ -1,0 +1,12 @@
+{
+  "name": "${localWorkspaceFolderBasename}",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:1-22-bookworm",
+  "forwardPorts": [5173],
+  "runArgs": ["--env-file", ".devcontainer/.env"],
+  "customizations": {
+    "vscode": {
+      "extensions": ["xabikos.JavaScriptSnippets", "esbenp.prettier-vscode"]
+    }
+  },
+  "remoteUser": "node"
+}
