@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- 背景グラデーション -->
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c3e50" stop-opacity="0.2" />
+      <stop offset="100%" stop-color="#3498db" stop-opacity="0.2" />
+    </linearGradient>
+  </defs>
+  
+  <!-- 背景円 -->
+  <circle cx="256" cy="256" r="256" fill="url(#bg-gradient)" />
+  
+  <!-- メインの紙のような形 - 境界線を太くして目立たせる -->
+  <rect x="128" y="96" width="256" height="320" rx="24" fill="white" 
+        stroke="#2c3e50" stroke-width="12" />
+  
+  <!-- タイトル部分 - 高さを大きくして目立たせる -->
+  <rect x="128" y="96" width="256" height="64" rx="24" fill="#2c3e50" />
+  <text x="256" y="140" font-family="Arial, sans-serif" font-size="32" font-weight="bold" 
+        text-anchor="middle" fill="white">ToDo</text>
+  
+  <!-- タスク項目 - 3つに減らし、間隔を広げ、サイズを大きく -->
+  <g>
+    <!-- タスク1（高優先度・完了） -->
+    <rect x="144" y="176" width="224" height="56" rx="8" fill="#e74c3c" fill-opacity="0.2" />
+    <circle cx="172" cy="204" r="16" fill="#e74c3c" />
+    <path d="M164 204 L170 210 L180 200" stroke="white" stroke-width="4" fill="none" 
+          stroke-linecap="round" stroke-linejoin="round" />
+    <line x1="200" y1="204" x2="344" y2="204" stroke="#2c3e50" stroke-width="4" stroke-opacity="0.5" />
+    
+    <!-- タスク2（中優先度・未完了） -->
+    <rect x="144" y="248" width="224" height="56" rx="8" fill="#f39c12" fill-opacity="0.2" />
+    <circle cx="172" cy="276" r="16" fill="white" stroke="#f39c12" stroke-width="3" />
+    <line x1="200" y1="276" x2="344" y2="276" stroke="#2c3e50" stroke-width="4" />
+    
+    <!-- タスク3（アクセントカラー・未完了） -->
+    <rect x="144" y="320" width="224" height="56" rx="8" fill="#3498db" fill-opacity="0.2" />
+    <circle cx="172" cy="348" r="16" fill="white" stroke="#3498db" stroke-width="3" />
+    <line x1="200" y1="348" x2="344" y2="348" stroke="#2c3e50" stroke-width="4" />
+  </g>
+</svg>
