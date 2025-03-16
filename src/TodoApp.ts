@@ -4,6 +4,11 @@ import { TaskForm } from "./components/TaskForm";
 import { TaskList } from "./components/TaskList";
 import { TodoStore } from "./store/TodoStore";
 
+/**
+ * Todoアプリケーションのメインクラス
+ * @class
+ * @description タスク管理アプリケーションの全体的な状態と操作を管理します
+ */
 export class TodoApp {
   private container: HTMLDivElement;
   private header: HTMLElement;
@@ -12,6 +17,11 @@ export class TodoApp {
   private taskList: TaskList;
   private todoStore: TodoStore;
 
+  /**
+   * TodoAppのインスタンスを作成
+   * @param {HTMLElement} rootElement - アプリケーションをマウントするDOM要素
+   * @param {TodoStore} todoStore - タスクデータを管理するストアインスタンス
+   */
   constructor(rootElement: HTMLElement, todoStore: TodoStore) {
     this.todoStore = todoStore;
 
@@ -51,7 +61,9 @@ export class TodoApp {
   }
 
   /**
-   * 初期タスクを読み込む
+   * 初期タスクを読み込んでアプリケーションを初期化
+   * @private
+   * @description localStorageからタスクを読み込み、存在しない場合はサンプルタスクを設定します
    */
   private loadInitialTasks(): void {
     // localStorageからタスクを読み込む
@@ -89,7 +101,10 @@ export class TodoApp {
   }
 
   /**
-   * タスク追加ハンドラー
+   * 新しいタスクを追加するハンドラー
+   * @private
+   * @param {string} text - タスクの内容
+   * @param {TaskPriority} priority - タスクの優先度
    */
   private handleTaskAdd(text: string, priority: TaskPriority): void {
     const newTask: Task = {
@@ -104,7 +119,9 @@ export class TodoApp {
   }
 
   /**
-   * タスク削除ハンドラー
+   * タスクを削除するハンドラー
+   * @private
+   * @param {string} taskId - 削除するタスクのID
    */
   private handleTaskDelete(taskId: string): void {
     console.log("Deleting task:", taskId);
@@ -114,7 +131,10 @@ export class TodoApp {
   }
 
   /**
-   * タスク状態変更ハンドラー
+   * タスクの状態を更新するハンドラー
+   * @private
+   * @param {string} taskId - 更新するタスクのID
+   * @param {boolean} completed - タスクの新しい完了状態
    */
   private handleTaskStatusChange(taskId: string, completed: boolean): void {
     this.todoStore.update({ id: taskId, completed });

@@ -1,6 +1,10 @@
 import { TaskPriority } from "../types/todo";
 import { createElement } from "../utils/dom";
 
+/**
+ * タスク入力フォームを管理するクラス
+ * @class
+ */
 export class TaskForm {
   private element: HTMLElement;
   private form: HTMLFormElement;
@@ -8,6 +12,10 @@ export class TaskForm {
   private prioritySelect: HTMLSelectElement;
   private onTaskAdd: (text: string, priority: TaskPriority) => void;
 
+  /**
+   * TaskFormのインスタンスを作成
+   * @param {function} onTaskAdd - タスク追加時のコールバック関数
+   */
   constructor(onTaskAdd: (text: string, priority: TaskPriority) => void) {
     this.onTaskAdd = onTaskAdd;
 
@@ -91,6 +99,10 @@ export class TaskForm {
     this.setupEventListeners();
   }
 
+  /**
+   * イベントリスナーを設定
+   * @private
+   */
   private setupEventListeners(): void {
     // フォーム送信イベント
     this.form.addEventListener("submit", (e) => {
@@ -111,7 +123,8 @@ export class TaskForm {
   }
 
   /**
-   * タスク入力フォーム要素を取得する
+   * フォームのDOM要素を取得
+   * @returns {HTMLElement} フォームのDOM要素
    */
   public getElement(): HTMLElement {
     return this.element;
