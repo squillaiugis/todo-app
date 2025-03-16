@@ -1,22 +1,22 @@
 /**
- * タスクの優先度を表す型
+ * Type representing task priority
  * @typedef {'high' | 'medium' | 'low'} TaskPriority
  */
 export type TaskPriority = "high" | "medium" | "low";
 
 /**
- * タスクのフィルター状態を表す型
+ * Type representing task filter state
  * @typedef {'all' | 'active' | 'completed'} TaskFilter
  */
 export type TaskFilter = "all" | "active" | "completed";
 
 /**
- * タスクを表すインターフェース
+ * Interface representing a task
  * @interface Task
- * @property {string} id - タスクの一意識別子
- * @property {string} text - タスクの内容
- * @property {TaskPriority} priority - タスクの優先度
- * @property {boolean} completed - タスクの完了状態
+ * @property {string} id - Unique identifier for the task
+ * @property {string} text - Task content
+ * @property {TaskPriority} priority - Task priority
+ * @property {boolean} completed - Task completion status
  */
 export interface Task {
   id: string;

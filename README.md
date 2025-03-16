@@ -1,37 +1,36 @@
 # Todo App
 
-シンプルな Todo リストアプリです。
+A simple Todo list application.
 
-## 機能
+## Features
 
-- タスクの追加、削除、完了/未完了の切り替え
-- 優先度（高、中、低）の設定
-- タスクのフィルタリング（すべて、アクティブ、完了済み）
-- レスポンシブデザイン
-- 日本語フォントのサポート
+- Add, delete, and toggle task completion status
+- Set priority levels (High, Medium, Low)
+- Filter tasks (All, Active, Completed)
+- Responsive design
 
-## 技術スタック
+## Tech Stack
 
 - TypeScript
 - Vite
 - CSS
-- ノーフレームワークアプローチ
+- No-framework approach
 
-## プロジェクト構造
+## Project Structure
 
 ```
 todo-app/
 ├── src/
-│   ├── components/     # UIコンポーネント
-│   ├── store/          # データ永続化
-│   ├── types/          # 型定義
-│   ├── utils/          # ユーティリティ関数
-│   ├── TodoApp.ts      # メインアプリケーションクラス
-│   └── main.ts         # エントリーポイント
-├── public/             # 静的ファイル
-└── ...                 # 設定ファイルなど
+│   ├── components/     # UI components
+│   ├── store/          # Data persistence
+│   ├── types/          # Type definitions
+│   ├── utils/          # Utility functions
+│   ├── TodoApp.ts      # Main application class
+│   └── main.ts         # Entry point
+├── public/             # Static files
+└── ...                 # Configuration files
 ```
 
-## ライセンス
+## License
 
-MIT ライセンスの下で公開されています。詳細は [LICENSE](LICENSE) ファイルを参照してください。
+Released under the MIT License. See [LICENSE](LICENSE) file for details.

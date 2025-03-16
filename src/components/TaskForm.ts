@@ -2,7 +2,7 @@ import { TaskPriority } from "../types/todo";
 import { createElement } from "../utils/dom";
 
 /**
- * タスク入力フォームを管理するクラス
+ * Class for managing task input form
  * @class
  */
 export class TaskForm {
@@ -13,36 +13,36 @@ export class TaskForm {
   private onTaskAdd: (text: string, priority: TaskPriority) => void;
 
   /**
-   * TaskFormのインスタンスを作成
-   * @param {function} onTaskAdd - タスク追加時のコールバック関数
+   * Create a new TaskForm instance
+   * @param {function} onTaskAdd - Callback function for task addition
    */
   constructor(onTaskAdd: (text: string, priority: TaskPriority) => void) {
     this.onTaskAdd = onTaskAdd;
 
-    // 要素の作成
+    // Create element
     this.element = createElement<HTMLElement>(
       "section",
       "input-section glass-panel"
     );
 
-    // 見出し
+    // Heading
     const heading = createElement<HTMLHeadingElement>("h2");
-    heading.textContent = "新しいタスク";
+    heading.textContent = "New Task";
 
-    // フォーム
+    // Form
     this.form = createElement<HTMLFormElement>("form", "", { id: "todo-form" });
 
-    // タスク入力フィールド
+    // Task input field
     const taskInputGroup = createElement<HTMLDivElement>("div", "form-group");
     this.taskInput = createElement<HTMLInputElement>("input", "", {
       type: "text",
       id: "task-input",
-      placeholder: "タスクを入力してください",
+      placeholder: "Enter your task",
       required: "required",
     });
     taskInputGroup.appendChild(this.taskInput);
 
-    // 優先度選択
+    // Priority selection
     const priorityGroup = createElement<HTMLDivElement>(
       "div",
       "form-group priority-group"
@@ -50,7 +50,7 @@ export class TaskForm {
     const priorityLabel = createElement<HTMLLabelElement>("label", "", {
       for: "priority-select",
     });
-    priorityLabel.textContent = "優先度";
+    priorityLabel.textContent = "Priority";
 
     this.prioritySelect = createElement<HTMLSelectElement>("select", "", {
       id: "priority-select",
@@ -61,9 +61,9 @@ export class TaskForm {
       label: string;
       selected?: boolean;
     }[] = [
-      { value: "high", label: "高" },
-      { value: "medium", label: "中", selected: true },
-      { value: "low", label: "低" },
+      { value: "high", label: "High" },
+      { value: "medium", label: "Medium", selected: true },
+      { value: "low", label: "Low" },
     ];
 
     priorities.forEach((priority) => {
@@ -80,31 +80,31 @@ export class TaskForm {
     priorityGroup.appendChild(priorityLabel);
     priorityGroup.appendChild(this.prioritySelect);
 
-    // 追加ボタン
+    // Add button
     const addButton = createElement<HTMLButtonElement>("button", "btn-add", {
       type: "submit",
     });
-    addButton.textContent = "追加";
+    addButton.textContent = "Add";
 
-    // フォームの構築
+    // Build form
     this.form.appendChild(taskInputGroup);
     this.form.appendChild(priorityGroup);
     this.form.appendChild(addButton);
 
-    // 要素の構築
+    // Build elements
     this.element.appendChild(heading);
     this.element.appendChild(this.form);
 
-    // イベントリスナーの設定
+    // Set up event listeners
     this.setupEventListeners();
   }
 
   /**
-   * イベントリスナーを設定
+   * Set up event listeners
    * @private
    */
   private setupEventListeners(): void {
-    // フォーム送信イベント
+    // Form submission event
     this.form.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -113,18 +113,18 @@ export class TaskForm {
 
       const priority = this.prioritySelect.value as TaskPriority;
 
-      // タスク追加イベントを発火
+      // Fire task addition event
       this.onTaskAdd(taskText, priority);
 
-      // フォームをリセット
+      // Reset form
       this.taskInput.value = "";
       this.taskInput.focus();
     });
   }
 
   /**
-   * フォームのDOM要素を取得
-   * @returns {HTMLElement} フォームのDOM要素
+   * Get form DOM element
+   * @returns {HTMLElement} Form DOM element
    */
   public getElement(): HTMLElement {
     return this.element;

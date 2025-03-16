@@ -5,9 +5,9 @@ import { TaskList } from "./components/TaskList";
 import { TodoStore } from "./store/TodoStore";
 
 /**
- * Todoアプリケーションのメインクラス
+ * Main class for Todo application
  * @class
- * @description タスク管理アプリケーションの全体的な状態と操作を管理します
+ * @description Manages overall state and operations of the task management application
  */
 export class TodoApp {
   private container: HTMLDivElement;
@@ -18,81 +18,81 @@ export class TodoApp {
   private todoStore: TodoStore;
 
   /**
-   * TodoAppのインスタンスを作成
-   * @param {HTMLElement} rootElement - アプリケーションをマウントするDOM要素
-   * @param {TodoStore} todoStore - タスクデータを管理するストアインスタンス
+   * Create a new TodoApp instance
+   * @param {HTMLElement} rootElement - DOM element to mount the application
+   * @param {TodoStore} todoStore - Store instance for managing task data
    */
   constructor(rootElement: HTMLElement, todoStore: TodoStore) {
     this.todoStore = todoStore;
 
-    // コンテナの作成
+    // Create container
     this.container = createElement<HTMLDivElement>("div", "container");
 
-    // ヘッダーの作成
+    // Create header
     this.header = createElement<HTMLElement>("header", "header");
     const logo = createElement<HTMLHeadingElement>("h1", "logo");
     logo.textContent = "Todo App";
     this.header.appendChild(logo);
 
-    // メインコンテンツの作成
+    // Create main content
     this.main = createElement<HTMLElement>("main", "main");
 
-    // タスク入力フォームの作成
+    // Create task input form
     this.taskForm = new TaskForm(this.handleTaskAdd.bind(this));
 
-    // タスクリストの作成
+    // Create task list
     this.taskList = new TaskList(
       this.handleTaskDelete.bind(this),
       this.handleTaskStatusChange.bind(this)
     );
 
-    // 要素の構築
+    // Build elements
     this.main.appendChild(this.taskForm.getElement());
     this.main.appendChild(this.taskList.getElement());
 
     this.container.appendChild(this.header);
     this.container.appendChild(this.main);
 
-    // ルート要素に追加
+    // Add to root element
     rootElement.appendChild(this.container);
 
-    // 初期タスクの設定
+    // Set initial tasks
     this.loadInitialTasks();
   }
 
   /**
-   * 初期タスクを読み込んでアプリケーションを初期化
+   * Load initial tasks and initialize application
    * @private
-   * @description localStorageからタスクを読み込み、存在しない場合はサンプルタスクを設定します
+   * @description Loads tasks from localStorage, sets sample tasks if none exist
    */
   private loadInitialTasks(): void {
-    // localStorageからタスクを読み込む
+    // Load tasks from localStorage
     const tasks = this.todoStore.getAll();
 
-    // タスクが存在しない場合のみ、サンプルタスクを設定
+    // Set sample tasks only if no tasks exist
     if (tasks.length === 0) {
       const initialTasks: Task[] = [
         {
           id: "1",
-          text: "プロジェクト計画書を作成する",
+          text: "Create project plan",
           priority: "high",
           completed: false,
         },
         {
           id: "2",
-          text: "買い物リストを作る",
+          text: "Make shopping list",
           priority: "medium",
           completed: false,
         },
         {
           id: "3",
-          text: "メールを確認する",
+          text: "Check emails",
           priority: "low",
           completed: true,
         },
       ];
 
-      // サンプルタスクを保存
+      // Save sample tasks
       initialTasks.forEach((task) => this.todoStore.add(task));
       this.taskList.setInitialTasks(initialTasks);
     } else {
@@ -101,10 +101,10 @@ export class TodoApp {
   }
 
   /**
-   * 新しいタスクを追加するハンドラー
+   * Handler for adding new tasks
    * @private
-   * @param {string} text - タスクの内容
-   * @param {TaskPriority} priority - タスクの優先度
+   * @param {string} text - Task content
+   * @param {TaskPriority} priority - Task priority
    */
   private handleTaskAdd(text: string, priority: TaskPriority): void {
     const newTask: Task = {
@@ -119,9 +119,9 @@ export class TodoApp {
   }
 
   /**
-   * タスクを削除するハンドラー
+   * Handler for deleting tasks
    * @private
-   * @param {string} taskId - 削除するタスクのID
+   * @param {string} taskId - ID of task to delete
    */
   private handleTaskDelete(taskId: string): void {
     console.log("Deleting task:", taskId);
@@ -131,10 +131,10 @@ export class TodoApp {
   }
 
   /**
-   * タスクの状態を更新するハンドラー
+   * Handler for updating task status
    * @private
-   * @param {string} taskId - 更新するタスクのID
-   * @param {boolean} completed - タスクの新しい完了状態
+   * @param {string} taskId - ID of task to update
+   * @param {boolean} completed - New completion status of task
    */
   private handleTaskStatusChange(taskId: string, completed: boolean): void {
     this.todoStore.update({ id: taskId, completed });
