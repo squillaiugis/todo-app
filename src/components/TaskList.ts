@@ -131,6 +131,11 @@ export class TaskList {
     const index = this.tasks.findIndex((task) => task.getId() === taskId);
 
     if (index !== -1) {
+      // DOM要素を削除
+      const taskElement = this.tasks[index].getElement();
+      taskElement.remove();
+
+      // tasksの配列から削除
       this.tasks.splice(index, 1);
       this.applyFilterAndPagination();
     }

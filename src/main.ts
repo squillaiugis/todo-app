@@ -1,5 +1,6 @@
 import "./style.css";
 import { TodoApp } from "./TodoApp";
+import { TodoStore } from "./store/TodoStore";
 
 // フォントの読み込み
 const fontLink1 = document.createElement("link");
@@ -26,7 +27,8 @@ document.title = "Todo App";
 const appElement = document.querySelector<HTMLDivElement>("#app");
 
 if (appElement) {
-  new TodoApp(appElement);
+  const todoStore = new TodoStore(localStorage);
+  new TodoApp(appElement, todoStore);
 } else {
   console.error("アプリのルート要素が見つかりません。");
 }

@@ -2,6 +2,7 @@ import { Task, TaskPriority } from "./types/todo";
 import { createElement } from "./utils/dom";
 import { TaskForm } from "./components/TaskForm";
 import { TaskList } from "./components/TaskList";
+import { TodoStore } from "./store/TodoStore";
 
 export class TodoApp {
   private container: HTMLDivElement;
@@ -9,10 +10,10 @@ export class TodoApp {
   private main: HTMLElement;
   private taskForm: TaskForm;
   private taskList: TaskList;
-  private tasks: Task[];
+  private todoStore: TodoStore;
 
-  constructor(rootElement: HTMLElement) {
-    this.tasks = [];
+  constructor(rootElement: HTMLElement, todoStore: TodoStore) {
+    this.todoStore = todoStore;
 
     // コンテナの作成
     this.container = createElement<HTMLDivElement>("div", "container");
@@ -53,30 +54,38 @@ export class TodoApp {
    * 初期タスクを読み込む
    */
   private loadInitialTasks(): void {
-    // サンプルタスク
-    const initialTasks: Task[] = [
-      {
-        id: "1",
-        text: "プロジェクト計画書を作成する",
-        priority: "high",
-        completed: false,
-      },
-      {
-        id: "2",
-        text: "買い物リストを作る",
-        priority: "medium",
-        completed: false,
-      },
-      {
-        id: "3",
-        text: "メールを確認する",
-        priority: "low",
-        completed: true,
-      },
-    ];
+    // localStorageからタスクを読み込む
+    const tasks = this.todoStore.getAll();
 
-    this.tasks = initialTasks;
-    this.taskList.setInitialTasks(this.tasks);
+    // タスクが存在しない場合のみ、サンプルタスクを設定
+    if (tasks.length === 0) {
+      const initialTasks: Task[] = [
+        {
+          id: "1",
+          text: "プロジェクト計画書を作成する",
+          priority: "high",
+          completed: false,
+        },
+        {
+          id: "2",
+          text: "買い物リストを作る",
+          priority: "medium",
+          completed: false,
+        },
+        {
+          id: "3",
+          text: "メールを確認する",
+          priority: "low",
+          completed: true,
+        },
+      ];
+
+      // サンプルタスクを保存
+      initialTasks.forEach((task) => this.todoStore.add(task));
+      this.taskList.setInitialTasks(initialTasks);
+    } else {
+      this.taskList.setInitialTasks(tasks);
+    }
   }
 
   /**
@@ -90,7 +99,7 @@ export class TodoApp {
       completed: false,
     };
 
-    this.tasks.unshift(newTask);
+    this.todoStore.add(newTask);
     this.taskList.addTask(newTask);
   }
 
@@ -98,7 +107,9 @@ export class TodoApp {
    * タスク削除ハンドラー
    */
   private handleTaskDelete(taskId: string): void {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    console.log("Deleting task:", taskId);
+    this.todoStore.delete(taskId);
+    console.log("Remaining tasks:", this.todoStore.getAll());
     this.taskList.removeTask(taskId);
   }
 
@@ -106,11 +117,7 @@ export class TodoApp {
    * タスク状態変更ハンドラー
    */
   private handleTaskStatusChange(taskId: string, completed: boolean): void {
-    const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
-
-    if (taskIndex !== -1) {
-      this.tasks[taskIndex].completed = completed;
-      this.taskList.updateTaskStatus(taskId, completed);
-    }
+    this.todoStore.update({ id: taskId, completed });
+    this.taskList.updateTaskStatus(taskId, completed);
   }
 }
