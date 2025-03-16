@@ -2,17 +2,28 @@ import { Task, TaskPriority } from "./types/todo";
 import { createElement } from "./utils/dom";
 import { TaskForm } from "./components/TaskForm";
 import { TaskList } from "./components/TaskList";
+import { TodoStore } from "./store/TodoStore";
 
+/**
+ * Todoアプリケーションのメインクラス
+ * @class
+ * @description タスク管理アプリケーションの全体的な状態と操作を管理します
+ */
 export class TodoApp {
   private container: HTMLDivElement;
   private header: HTMLElement;
   private main: HTMLElement;
   private taskForm: TaskForm;
   private taskList: TaskList;
-  private tasks: Task[];
+  private todoStore: TodoStore;
 
-  constructor(rootElement: HTMLElement) {
-    this.tasks = [];
+  /**
+   * TodoAppのインスタンスを作成
+   * @param {HTMLElement} rootElement - アプリケーションをマウントするDOM要素
+   * @param {TodoStore} todoStore - タスクデータを管理するストアインスタンス
+   */
+  constructor(rootElement: HTMLElement, todoStore: TodoStore) {
+    this.todoStore = todoStore;
 
     // コンテナの作成
     this.container = createElement<HTMLDivElement>("div", "container");
@@ -50,37 +61,50 @@ export class TodoApp {
   }
 
   /**
-   * 初期タスクを読み込む
+   * 初期タスクを読み込んでアプリケーションを初期化
+   * @private
+   * @description localStorageからタスクを読み込み、存在しない場合はサンプルタスクを設定します
    */
   private loadInitialTasks(): void {
-    // サンプルタスク
-    const initialTasks: Task[] = [
-      {
-        id: "1",
-        text: "プロジェクト計画書を作成する",
-        priority: "high",
-        completed: false,
-      },
-      {
-        id: "2",
-        text: "買い物リストを作る",
-        priority: "medium",
-        completed: false,
-      },
-      {
-        id: "3",
-        text: "メールを確認する",
-        priority: "low",
-        completed: true,
-      },
-    ];
+    // localStorageからタスクを読み込む
+    const tasks = this.todoStore.getAll();
 
-    this.tasks = initialTasks;
-    this.taskList.setInitialTasks(this.tasks);
+    // タスクが存在しない場合のみ、サンプルタスクを設定
+    if (tasks.length === 0) {
+      const initialTasks: Task[] = [
+        {
+          id: "1",
+          text: "プロジェクト計画書を作成する",
+          priority: "high",
+          completed: false,
+        },
+        {
+          id: "2",
+          text: "買い物リストを作る",
+          priority: "medium",
+          completed: false,
+        },
+        {
+          id: "3",
+          text: "メールを確認する",
+          priority: "low",
+          completed: true,
+        },
+      ];
+
+      // サンプルタスクを保存
+      initialTasks.forEach((task) => this.todoStore.add(task));
+      this.taskList.setInitialTasks(initialTasks);
+    } else {
+      this.taskList.setInitialTasks(tasks);
+    }
   }
 
   /**
-   * タスク追加ハンドラー
+   * 新しいタスクを追加するハンドラー
+   * @private
+   * @param {string} text - タスクの内容
+   * @param {TaskPriority} priority - タスクの優先度
    */
   private handleTaskAdd(text: string, priority: TaskPriority): void {
     const newTask: Task = {
@@ -90,27 +114,30 @@ export class TodoApp {
       completed: false,
     };
 
-    this.tasks.unshift(newTask);
+    this.todoStore.add(newTask);
     this.taskList.addTask(newTask);
   }
 
   /**
-   * タスク削除ハンドラー
+   * タスクを削除するハンドラー
+   * @private
+   * @param {string} taskId - 削除するタスクのID
    */
   private handleTaskDelete(taskId: string): void {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    console.log("Deleting task:", taskId);
+    this.todoStore.delete(taskId);
+    console.log("Remaining tasks:", this.todoStore.getAll());
     this.taskList.removeTask(taskId);
   }
 
   /**
-   * タスク状態変更ハンドラー
+   * タスクの状態を更新するハンドラー
+   * @private
+   * @param {string} taskId - 更新するタスクのID
+   * @param {boolean} completed - タスクの新しい完了状態
    */
   private handleTaskStatusChange(taskId: string, completed: boolean): void {
-    const taskIndex = this.tasks.findIndex((task) => task.id === taskId);
-
-    if (taskIndex !== -1) {
-      this.tasks[taskIndex].completed = completed;
-      this.taskList.updateTaskStatus(taskId, completed);
-    }
+    this.todoStore.update({ id: taskId, completed });
+    this.taskList.updateTaskStatus(taskId, completed);
   }
 }

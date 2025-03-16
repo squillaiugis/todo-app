@@ -1,6 +1,10 @@
 import { Task } from "../types/todo";
 import { createElement } from "../utils/dom";
 
+/**
+ * 個々のタスク項目を管理するクラス
+ * @class
+ */
 export class TaskItem {
   private element: HTMLLIElement;
   private checkbox: HTMLInputElement;
@@ -10,6 +14,12 @@ export class TaskItem {
   private onDelete: (taskId: string) => void;
   private onStatusChange: (taskId: string, completed: boolean) => void;
 
+  /**
+   * TaskItemのインスタンスを作成
+   * @param {Task} task - タスクデータ
+   * @param {function} onDelete - タスク削除時のコールバック関数
+   * @param {function} onStatusChange - タスクの状態変更時のコールバック関数
+   */
   constructor(
     task: Task,
     onDelete: (taskId: string) => void,
@@ -58,6 +68,10 @@ export class TaskItem {
     this.setupEventListeners();
   }
 
+  /**
+   * イベントリスナーを設定
+   * @private
+   */
   private setupEventListeners(): void {
     // チェックボックスの変更イベント
     this.checkbox.addEventListener("change", () => {
@@ -85,6 +99,10 @@ export class TaskItem {
     this.taskText.addEventListener("click", this.toggleTaskText.bind(this));
   }
 
+  /**
+   * タスクテキストの展開/折りたたみを切り替え
+   * @private
+   */
   private toggleTaskText(): void {
     // チェックボックスのクリックイベントが伝播しないようにする
     if (this.taskText.classList.contains("expanded")) {
@@ -101,7 +119,7 @@ export class TaskItem {
   }
 
   /**
-   * タスクテキストの省略状態を設定する
+   * タスクテキストの省略状態を設定
    */
   public setupTaskText(): void {
     // テキストが省略されているかチェック
@@ -113,28 +131,32 @@ export class TaskItem {
   }
 
   /**
-   * タスク項目の要素を取得する
+   * タスク項目のDOM要素を取得
+   * @returns {HTMLLIElement} タスク項目のDOM要素
    */
   public getElement(): HTMLLIElement {
     return this.element;
   }
 
   /**
-   * タスクのIDを取得する
+   * タスクのIDを取得
+   * @returns {string} タスクのID
    */
   public getId(): string {
     return this.task.id;
   }
 
   /**
-   * タスクの完了状態を取得する
+   * タスクの完了状態を取得
+   * @returns {boolean} タスクが完了している場合はtrue
    */
   public isCompleted(): boolean {
     return this.task.completed;
   }
 
   /**
-   * タスクの表示/非表示を設定する
+   * タスクの表示/非表示を設定
+   * @param {string} display - CSSのdisplayプロパティ値
    */
   public setDisplay(display: string): void {
     this.element.style.display = display;

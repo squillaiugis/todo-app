@@ -23,6 +23,7 @@
 todo-app/
 ├── src/
 │   ├── components/     # UIコンポーネント
+│   ├── store/          # データ永続化
 │   ├── types/          # 型定義
 │   ├── utils/          # ユーティリティ関数
 │   ├── TodoApp.ts      # メインアプリケーションクラス

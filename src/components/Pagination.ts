@@ -1,5 +1,9 @@
 import { createElement } from "../utils/dom";
 
+/**
+ * ページネーションを管理するクラス
+ * @class
+ */
 export class Pagination {
   private element: HTMLDivElement;
   private prevBtn: HTMLButtonElement;
@@ -9,6 +13,10 @@ export class Pagination {
   private totalPages: number;
   private onPageChange: (page: number) => void;
 
+  /**
+   * Paginationのインスタンスを作成
+   * @param {function} onPageChange - ページ変更時のコールバック関数
+   */
   constructor(onPageChange: (page: number) => void) {
     this.currentPage = 1;
     this.totalPages = 1;
@@ -52,6 +60,10 @@ export class Pagination {
     this.updatePageNumbers();
   }
 
+  /**
+   * イベントリスナーを設定
+   * @private
+   */
   private setupEventListeners(): void {
     // 前へボタンのクリックイベント
     this.prevBtn.addEventListener("click", () => {
@@ -68,6 +80,10 @@ export class Pagination {
     });
   }
 
+  /**
+   * ページ番号の表示を更新
+   * @private
+   */
   private updatePageNumbers(): void {
     this.pageNumbers.innerHTML = "";
 
@@ -92,7 +108,8 @@ export class Pagination {
   }
 
   /**
-   * 現在のページを設定する
+   * 指定したページに移動
+   * @param {number} page - 移動先のページ番号
    */
   public setPage(page: number): void {
     if (page < 1 || page > this.totalPages || page === this.currentPage) {
@@ -105,7 +122,9 @@ export class Pagination {
   }
 
   /**
-   * 総ページ数を更新する
+   * 総ページ数を更新
+   * @param {number} totalItems - アイテムの総数
+   * @param {number} itemsPerPage - 1ページあたりのアイテム数
    */
   public updateTotalPages(totalItems: number, itemsPerPage: number): void {
     const newTotalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
@@ -118,14 +137,16 @@ export class Pagination {
   }
 
   /**
-   * ページネーション要素を取得する
+   * ページネーション要素を取得
+   * @returns {HTMLDivElement} ページネーションのDOM要素
    */
   public getElement(): HTMLDivElement {
     return this.element;
   }
 
   /**
-   * 現在のページを取得する
+   * 現在のページ番号を取得
+   * @returns {number} 現在のページ番号
    */
   public getCurrentPage(): number {
     return this.currentPage;

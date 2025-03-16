@@ -3,6 +3,10 @@ import { createElement } from "../utils/dom";
 import { TaskItem } from "./TaskItem";
 import { Pagination } from "./Pagination";
 
+/**
+ * タスクリストを管理するクラス
+ * @class
+ */
 export class TaskList {
   private element: HTMLElement;
   private tasksContainer: HTMLDivElement;
@@ -15,6 +19,11 @@ export class TaskList {
   private onTaskDelete: (taskId: string) => void;
   private onTaskStatusChange: (taskId: string, completed: boolean) => void;
 
+  /**
+   * TaskListのインスタンスを作成
+   * @param {function} onTaskDelete - タスク削除時のコールバック関数
+   * @param {function} onTaskStatusChange - タスク状態変更時のコールバック関数
+   */
   constructor(
     onTaskDelete: (taskId: string) => void,
     onTaskStatusChange: (taskId: string, completed: boolean) => void
@@ -74,6 +83,10 @@ export class TaskList {
     this.setupEventListeners();
   }
 
+  /**
+   * イベントリスナーを設定
+   * @private
+   */
   private setupEventListeners(): void {
     // タブボタンのクリックイベント
     this.tabButtons.forEach((button) => {
@@ -93,12 +106,17 @@ export class TaskList {
     window.addEventListener("resize", this.setupTaskTexts.bind(this));
   }
 
+  /**
+   * ページ変更時の処理
+   * @private
+   */
   private handlePageChange(): void {
     this.applyFilterAndPagination();
   }
 
   /**
-   * タスクを追加する
+   * 新しいタスクを追加
+   * @param {Task} task - 追加するタスクデータ
    */
   public addTask(task: Task): void {
     const taskItem = new TaskItem(
@@ -125,19 +143,27 @@ export class TaskList {
   }
 
   /**
-   * タスクを削除する
+   * タスクを削除
+   * @param {string} taskId - 削除するタスクのID
    */
   public removeTask(taskId: string): void {
     const index = this.tasks.findIndex((task) => task.getId() === taskId);
 
     if (index !== -1) {
+      // DOM要素を削除
+      const taskElement = this.tasks[index].getElement();
+      taskElement.remove();
+
+      // tasksの配列から削除
       this.tasks.splice(index, 1);
       this.applyFilterAndPagination();
     }
   }
 
   /**
-   * タスクの状態を変更する
+   * タスクの状態を更新
+   * @param {string} taskId - 更新するタスクのID
+   * @param {boolean} completed - タスクの完了状態
    */
   public updateTaskStatus(taskId: string, completed: boolean): void {
     const taskItem = this.tasks.find((task) => task.getId() === taskId);
@@ -164,7 +190,9 @@ export class TaskList {
   }
 
   /**
-   * フィルターを適用する
+   * フィルターを適用してタスクを絞り込む
+   * @private
+   * @returns {TaskItem[]} フィルター適用後のタスク配列
    */
   private applyFilter(): TaskItem[] {
     const visibleTasks: TaskItem[] = [];
@@ -195,7 +223,9 @@ export class TaskList {
   }
 
   /**
-   * ページネーションを適用する
+   * ページネーションを適用
+   * @private
+   * @param {TaskItem[]} visibleTasks - 表示対象のタスク配列
    */
   private applyPagination(visibleTasks: TaskItem[]): void {
     const currentPage = this.pagination.getCurrentPage();
@@ -218,7 +248,8 @@ export class TaskList {
   }
 
   /**
-   * フィルターとページネーションを適用する
+   * フィルターとページネーションを適用
+   * @private
    */
   private applyFilterAndPagination(): void {
     const visibleTasks = this.applyFilter();
@@ -231,7 +262,8 @@ export class TaskList {
   }
 
   /**
-   * タスクテキストの省略状態を設定する
+   * タスクテキストの省略状態を設定
+   * @private
    */
   private setupTaskTexts(): void {
     this.tasks.forEach((task) => {
@@ -240,14 +272,16 @@ export class TaskList {
   }
 
   /**
-   * タスクリスト要素を取得する
+   * タスクリストのDOM要素を取得
+   * @returns {HTMLElement} タスクリストのDOM要素
    */
   public getElement(): HTMLElement {
     return this.element;
   }
 
   /**
-   * 初期タスクを設定する
+   * 初期タスクを設定
+   * @param {Task[]} tasks - 初期タスクの配列
    */
   public setInitialTasks(tasks: Task[]): void {
     this.tasks = tasks.map((task) => {
