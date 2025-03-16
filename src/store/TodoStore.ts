@@ -1,7 +1,7 @@
 import { Task } from "../types/todo";
 
 /**
- * TodoStoreクラス - タスクのローカルストレージ管理を担当
+ * TodoStore class - Manages task storage in localStorage
  * @class
  */
 export class TodoStore {
@@ -9,18 +9,18 @@ export class TodoStore {
   #key: string = "tasks";
 
   /**
-   * TodoStoreのインスタンスを作成
-   * @param {Storage} store - ストレージインスタンス（通常はlocalStorage）
+   * Create a new TodoStore instance
+   * @param {Storage} store - Storage instance (typically localStorage)
    */
   constructor(store: Storage) {
     this.#store = store;
   }
 
   /**
-   * データがTaskインターフェースに準拠しているか検証
+   * Validate if data conforms to Task interface
    * @private
-   * @param {unknown} data - 検証対象のデータ
-   * @returns {boolean} データが有効な場合はtrue、そうでない場合はfalse
+   * @param {unknown} data - Data to validate
+   * @returns {boolean} true if data is valid, false otherwise
    */
   private validate(data: unknown): data is Task {
     if (
@@ -44,9 +44,9 @@ export class TodoStore {
   }
 
   /**
-   * 保存されているすべてのタスクを取得
-   * @returns {Task[]} タスクの配列
-   * @throws {Error} データ形式が無効な場合
+   * Get all stored tasks
+   * @returns {Task[]} Array of tasks
+   * @throws {Error} If data format is invalid
    */
   getAll(): Task[] {
     const data = JSON.parse(this.#store.getItem(this.#key) || "[]");
@@ -60,9 +60,9 @@ export class TodoStore {
   }
 
   /**
-   * 指定された条件に一致するタスクをフィルタリング
-   * @param {Partial<Task>} condition - フィルタリング条件
-   * @returns {Task[]} フィルタリングされたタスクの配列
+   * Filter tasks based on specified conditions
+   * @param {Partial<Task>} condition - Filter conditions
+   * @returns {Task[]} Array of filtered tasks
    */
   filter(condition: Partial<Task>): Task[] {
     return this.getAll().filter((v) =>
@@ -73,9 +73,9 @@ export class TodoStore {
   }
 
   /**
-   * 新しいタスクを追加
-   * @param {Task} task - 追加するタスク
-   * @returns {Task[]} 更新後のタスク配列
+   * Add a new task
+   * @param {Task} task - Task to add
+   * @returns {Task[]} Updated array of tasks
    */
   add(task: Task): Task[] {
     const data = this.getAll();
@@ -85,9 +85,9 @@ export class TodoStore {
   }
 
   /**
-   * 既存のタスクを更新
-   * @param {Partial<Task> & { id: string }} task - 更新するタスクの部分データ（idは必須）
-   * @returns {Task[]} 更新後のタスク配列
+   * Update an existing task
+   * @param {Partial<Task> & { id: string }} task - Partial task data to update (id required)
+   * @returns {Task[]} Updated array of tasks
    */
   update(task: Partial<Task> & { id: string }): Task[] {
     const data = this.getAll().map((v) =>
@@ -98,9 +98,9 @@ export class TodoStore {
   }
 
   /**
-   * 指定されたIDのタスクを削除
-   * @param {string} id - 削除するタスクのID
-   * @returns {Task[]} 更新後のタスク配列
+   * Delete a task by ID
+   * @param {string} id - ID of task to delete
+   * @returns {Task[]} Updated array of tasks
    */
   delete(id: string): Task[] {
     const data = this.getAll().filter((v) => v.id !== id);

@@ -1,6 +1,6 @@
-/* 基本スタイル */
+/* Base styles */
 :root {
-    /* 集中力を高める青系のカラースキーム */
+    /* Blue color scheme to enhance focus */
     --primary-color: #2c3e50;
     --primary-light: #34495e;
     --primary-dark: #1a2530;
@@ -13,7 +13,8 @@
     --glass-border: rgba(255, 255, 255, 0.18);
     --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
     --border-radius: 12px;
-    --task-text-width: 300px; /* タスクテキストの固定幅 */
+    --task-text-width: 300px;
+    /* Fixed width for task text */
 }
 
 * {
@@ -22,7 +23,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -30,7 +32,7 @@ body {
     font-family: 'Noto Sans JP', sans-serif;
     color: var(--text-color);
     background-color: var(--bg-color);
-    background-image: 
+    background-image:
         radial-gradient(at 80% 20%, rgba(44, 62, 80, 0.3) 0px, transparent 50%),
         radial-gradient(at 20% 80%, rgba(52, 152, 219, 0.3) 0px, transparent 50%);
     background-attachment: fixed;
@@ -40,7 +42,12 @@ body {
     min-height: 100vh;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Noto Serif JP', serif;
     color: var(--primary-dark);
 }
@@ -72,7 +79,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.2);
 }
 
-/* ヘッダー */
+/* Header */
 .header {
     text-align: center;
     padding: 20px 0;
@@ -86,7 +93,7 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 1px;
 }
 
-/* メインコンテンツ */
+/* Main content */
 .main {
     display: flex;
     flex-direction: column;
@@ -94,7 +101,7 @@ h1, h2, h3, h4, h5, h6 {
     flex: 1;
 }
 
-/* 入力フォーム */
+/* Input form */
 .input-section {
     margin-bottom: 30px;
     width: 100%;
@@ -109,7 +116,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 15px;
 }
 
-/* 優先度グループのスタイル */
+/* Priority group styles */
 .priority-group {
     display: flex;
     align-items: center;
@@ -138,7 +145,7 @@ select {
     transition: all 0.3s ease;
 }
 
-/* テキスト入力のスタイル調整 */
+/* Text input style adjustments */
 input[type="text"] {
     font-size: 1.1rem;
     padding: 15px 20px;
@@ -168,7 +175,7 @@ select:focus {
     transform: translateY(-2px);
 }
 
-/* タブ */
+/* Tabs */
 .tabs {
     display: flex;
     margin-bottom: 20px;
@@ -207,11 +214,12 @@ select:focus {
     width: 100%;
 }
 
-/* タスクリスト */
+/* Task list */
 .tasks-container {
     max-height: 500px;
     overflow-y: auto;
-    overflow-x: hidden; /* 横スクロールを防止 */
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling */
     padding-right: 5px;
     width: 100%;
     position: relative;
@@ -276,7 +284,8 @@ select:focus {
     align-items: center;
     gap: 10px;
     flex: 1;
-    min-width: 0; /* flexboxでテキストを省略するために必要 */
+    min-width: 0;
+    /* flexboxでテキストを省略するために必要 */
     width: 100%;
     position: relative;
 }
@@ -286,10 +295,11 @@ select:focus {
     height: 20px;
     cursor: pointer;
     accent-color: var(--primary-color);
-    flex-shrink: 0; /* チェックボックスのサイズを固定 */
+    flex-shrink: 0;
+    /* チェックボックスのサイズを固定 */
 }
 
-/* タスクテキストのスタイル */
+/* Task text styles */
 .task-text {
     font-size: 1rem;
     width: var(--task-text-width);
@@ -301,14 +311,14 @@ select:focus {
     padding: 5px 0;
 }
 
-/* 省略表示状態のタスクテキスト */
+/* Task text in ellipsis state */
 .task-text.ellipsis {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-/* 展開表示状態のタスクテキスト */
+/* Task text in expanded state */
 .task-text.expanded {
     white-space: normal;
     word-wrap: break-word;
@@ -319,7 +329,7 @@ select:focus {
     margin: 5px 0;
 }
 
-/* 省略されているテキストを示す視覚的なインジケーター */
+/* Visual indicator for ellipsized text */
 .task-text.ellipsis[data-is-ellipsis="true"]::after {
     content: '';
     position: absolute;
@@ -332,7 +342,7 @@ select:focus {
     pointer-events: none;
 }
 
-/* 展開/折りたたみアイコン */
+/* Expand/collapse icon */
 .task-text[data-is-ellipsis="true"]::before {
     content: '⋯';
     position: absolute;
@@ -344,7 +354,8 @@ select:focus {
 .task-actions {
     display: flex;
     gap: 10px;
-    flex-shrink: 0; /* アクションボタンのサイズを固定 */
+    flex-shrink: 0;
+    /* アクションボタンのサイズを固定 */
     margin-left: 10px;
 }
 
@@ -364,7 +375,7 @@ select:focus {
     color: white;
 }
 
-/* ページネーション */
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -393,7 +404,7 @@ select:focus {
     cursor: not-allowed;
 }
 
-/* フッター */
+/* Footer */
 .footer {
     text-align: center;
     padding: 20px 0;
@@ -403,12 +414,13 @@ select:focus {
     width: 100%;
 }
 
-/* アニメーション */
+/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -419,9 +431,11 @@ select:focus {
     0% {
         transform: scale(0);
     }
+
     50% {
         transform: scale(1.2);
     }
+
     100% {
         transform: scale(1);
     }
@@ -435,24 +449,25 @@ select:focus {
     animation: checkmark 0.3s ease forwards;
 }
 
-/* レスポンシブデザイン */
+/* Responsive design */
 @media (min-width: 768px) {
     .main {
         flex-direction: row;
         align-items: flex-start;
     }
-    
+
     .input-section {
-        flex: 1.5; /* 入力フォームの横幅を1.5倍に拡大 */
+        flex: 1.5;
+        /* Expand input form width by 1.5x */
         margin-right: 20px;
         margin-bottom: 0;
     }
-    
+
     .tasks-section {
         flex: 2;
     }
-    
-    /* タスクテキストの幅を調整 */
+
+    /* Adjust task text width */
     :root {
         --task-text-width: 400px;
     }
@@ -462,45 +477,45 @@ select:focus {
     .container {
         padding: 15px;
     }
-    
+
     .glass-panel {
         padding: 20px;
     }
-    
+
     .logo {
         font-size: 2rem;
     }
-    
+
     .btn-add {
         width: 100%;
     }
-    
+
     .task-item {
         flex-direction: column;
         align-items: flex-start;
     }
-    
+
     .task-actions {
         margin-top: 10px;
         align-self: flex-end;
     }
-    
-    /* モバイル向け優先度グループのスタイル */
+
+    /* Mobile priority group styles */
     .priority-group {
         flex-direction: column;
         align-items: flex-start;
         gap: 8px;
     }
-    
+
     .priority-group select {
         max-width: 100%;
     }
-    
-    /* モバイル向けタスクテキストの幅を調整 */
+
+    /* Adjust task text width for mobile */
     :root {
         --task-text-width: 100%;
     }
-    
+
     .task-text {
         width: 100%;
     }

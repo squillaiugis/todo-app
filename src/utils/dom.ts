@@ -1,27 +1,27 @@
 /**
- * 指定されたセレクタに一致する要素を取得する
- * @param selector - CSSセレクタ
- * @returns 要素またはnull
+ * Get element matching the specified selector
+ * @param selector - CSS selector
+ * @returns Element or null
  */
 export function getElement<T extends HTMLElement>(selector: string): T | null {
   return document.querySelector<T>(selector);
 }
 
 /**
- * 指定されたセレクタに一致するすべての要素を取得する
- * @param selector - CSSセレクタ
- * @returns 要素の配列
+ * Get all elements matching the specified selector
+ * @param selector - CSS selector
+ * @returns Array of elements
  */
 export function getAllElements<T extends HTMLElement>(selector: string): T[] {
   return Array.from(document.querySelectorAll<T>(selector));
 }
 
 /**
- * 新しい要素を作成する
- * @param tagName - 作成する要素のタグ名
- * @param className - 要素に追加するクラス名
- * @param attributes - 要素に設定する属性
- * @returns 作成された要素
+ * Create a new element
+ * @param tagName - Tag name of element to create
+ * @param className - Class name to add to element
+ * @param attributes - Attributes to set on element
+ * @returns Created element
  */
 export function createElement<T extends HTMLElement>(
   tagName: string,

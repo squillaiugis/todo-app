@@ -1,7 +1,7 @@
 import { createElement } from "../utils/dom";
 
 /**
- * ページネーションを管理するクラス
+ * Class for managing pagination
  * @class
  */
 export class Pagination {
@@ -14,65 +14,65 @@ export class Pagination {
   private onPageChange: (page: number) => void;
 
   /**
-   * Paginationのインスタンスを作成
-   * @param {function} onPageChange - ページ変更時のコールバック関数
+   * Create a new Pagination instance
+   * @param {function} onPageChange - Callback function for page change events
    */
   constructor(onPageChange: (page: number) => void) {
     this.currentPage = 1;
     this.totalPages = 1;
     this.onPageChange = onPageChange;
 
-    // 要素の作成
+    // Create element
     this.element = createElement<HTMLDivElement>("div", "pagination");
 
-    // 前へボタン
+    // Previous button
     this.prevBtn = createElement<HTMLButtonElement>(
       "button",
       "pagination-btn",
       { id: "prev-page" }
     );
-    this.prevBtn.textContent = "前へ";
+    this.prevBtn.textContent = "Previous";
     this.prevBtn.disabled = true;
 
-    // ページ番号コンテナ
+    // Page numbers container
     this.pageNumbers = createElement<HTMLDivElement>("div", "", {
       id: "page-numbers",
     });
 
-    // 次へボタン
+    // Next button
     this.nextBtn = createElement<HTMLButtonElement>(
       "button",
       "pagination-btn",
       { id: "next-page" }
     );
-    this.nextBtn.textContent = "次へ";
+    this.nextBtn.textContent = "Next";
     this.nextBtn.disabled = true;
 
-    // 要素の構築
+    // Build elements
     this.element.appendChild(this.prevBtn);
     this.element.appendChild(this.pageNumbers);
     this.element.appendChild(this.nextBtn);
 
-    // イベントリスナーの設定
+    // Set up event listeners
     this.setupEventListeners();
 
-    // 初期ページの設定
+    // Set initial page
     this.updatePageNumbers();
   }
 
   /**
-   * イベントリスナーを設定
+   * Set up event listeners
    * @private
    */
   private setupEventListeners(): void {
-    // 前へボタンのクリックイベント
+    // Previous button click event
     this.prevBtn.addEventListener("click", () => {
       if (this.currentPage > 1) {
         this.setPage(this.currentPage - 1);
       }
     });
 
-    // 次へボタンのクリックイベント
+    // Next button click event
     this.nextBtn.addEventListener("click", () => {
       if (this.currentPage < this.totalPages) {
         this.setPage(this.currentPage + 1);
@@ -81,7 +81,7 @@ export class Pagination {
   }
 
   /**
-   * ページ番号の表示を更新
+   * Update page number display
    * @private
    */
   private updatePageNumbers(): void {
@@ -102,14 +102,14 @@ export class Pagination {
       this.pageNumbers.appendChild(pageBtn);
     }
 
-    // 前へ・次へボタンの状態を更新
+    // Update previous and next button states
     this.prevBtn.disabled = this.currentPage <= 1;
     this.nextBtn.disabled = this.currentPage >= this.totalPages;
   }
 
   /**
-   * 指定したページに移動
-   * @param {number} page - 移動先のページ番号
+   * Move to specified page
+   * @param {number} page - Target page number
    */
   public setPage(page: number): void {
     if (page < 1 || page > this.totalPages || page === this.currentPage) {
@@ -122,9 +122,9 @@ export class Pagination {
   }
 
   /**
-   * 総ページ数を更新
-   * @param {number} totalItems - アイテムの総数
-   * @param {number} itemsPerPage - 1ページあたりのアイテム数
+   * Update total number of pages
+   * @param {number} totalItems - Total number of items
+   * @param {number} itemsPerPage - Number of items per page
    */
   public updateTotalPages(totalItems: number, itemsPerPage: number): void {
     const newTotalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
@@ -137,16 +137,16 @@ export class Pagination {
   }
 
   /**
-   * ページネーション要素を取得
-   * @returns {HTMLDivElement} ページネーションのDOM要素
+   * Get pagination element
+   * @returns {HTMLDivElement} Pagination DOM element
    */
   public getElement(): HTMLDivElement {
     return this.element;
   }
 
   /**
-   * 現在のページ番号を取得
-   * @returns {number} 現在のページ番号
+   * Get current page number
+   * @returns {number} Current page number
    */
   public getCurrentPage(): number {
     return this.currentPage;

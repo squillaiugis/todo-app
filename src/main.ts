@@ -2,7 +2,7 @@ import "./style.css";
 import { TodoApp } from "./TodoApp";
 import { TodoStore } from "./store/TodoStore";
 
-// フォントの読み込み
+// Load fonts
 const fontLink1 = document.createElement("link");
 fontLink1.rel = "preconnect";
 fontLink1.href = "https://fonts.googleapis.com";
@@ -20,15 +20,15 @@ fontLink3.href =
   "https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;500;700&display=swap";
 document.head.appendChild(fontLink3);
 
-// タイトルの設定
+// Set title
 document.title = "Todo App";
 
-// アプリの初期化
+// Initialize app
 const appElement = document.querySelector<HTMLDivElement>("#app");
 
 if (appElement) {
   const todoStore = new TodoStore(localStorage);
   new TodoApp(appElement, todoStore);
 } else {
-  console.error("アプリのルート要素が見つかりません。");
+  console.error("App root element not found.");
 }
